@@ -10,9 +10,9 @@
 	function configFunction($routeProvider){
 		$routeProvider.when('/', {
 			templateUrl: 'app/landing/landing.html'
-		})
+		});
 
 	}
 
 
-})
+})();
