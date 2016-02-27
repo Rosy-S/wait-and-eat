@@ -5,12 +5,12 @@
 	.module('app.auth')
 	.controller('AuthController', AuthController);
 
-	AuthController.$inject = ['$firebaseAuth'];
+	AuthController.$inject = ['$location', '$firebaseAuth', 'FIREBASE_URL'];
 
 
-	function AuthController($firebaseAuth) {
+	function AuthController($location, $firebaseAuth, FIREBASE_URL) {
 		var vm  = this;
-		var firebaseReference = new Firebase('https://wait-and-eat-rosy.firebaseio.com/');
+		var firebaseReference = new Firebase(FIREBASE_URL);
 		var firebaseAuthObject = $firebaseAuth(firebaseReference);
 
 		vm.user = {
@@ -19,9 +19,35 @@
 		};
 
 		vm.register = register;
+		vm.login = login;
+		vm.logout = logout;
 
 		function register(user){
-			return firebaseAuthObject.$createUser(user);
+			return firebaseAuthObject.$createUser(user)
+				.then(function(){
+					vm.login(user);
+
+				})
+				.catch(function(error){
+					console.log(error);
+
+				});
+		}
+		function login(user){
+			return firebaseAuthObject.$authWithPassword(user)
+				.then(function(loggedInUser){
+					console.log(loggedInUser);
+				})
+				.catch(function(error){
+					console.log(error)
+
+				});
+		}
+		function logout(){
+			console.log('logged out');
+			firebaseAuthObject.$unauth();
+			//Redirect to '/'.
+			$location.path('/');
 		}
 	}
 })();

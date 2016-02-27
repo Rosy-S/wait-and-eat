@@ -12,5 +12,12 @@
 			controller: 'AuthController',
 			controllerAs: 'vm'
 		});
+
+		$routeProvider.when('/login', {
+			templateUrl: 'app/auth/login.html',
+			conntroller: 'AuthController',
+			controllerAs: 'vm'
+		});
 	}
+	
 })();
