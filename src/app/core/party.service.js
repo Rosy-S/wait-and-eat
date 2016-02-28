@@ -6,12 +6,26 @@
 		.module('app.core')
 		.factory('partyService', partyService);
 
-	function partyService(){
+		partyService.$inject = ['$firebaseArray', 'firebaseDataService'];
+
+	function partyService(firebaseArray, firebaseDataService){
 		//return an object
 
-		var service = {};
+		var service = {
+			Party: Party,
+			parties: $firebaseArray(firebaseDataService.root.child('parties'));
+		};
 
 		return service;
+
+		////////////////////////
+		function Party() {
+			this.name = '',
+			this.phone ='',
+			this.size ='',
+			this.done = false;
+			this.notified = false;
+		}
 	}
 })();
 
