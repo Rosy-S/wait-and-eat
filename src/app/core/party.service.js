@@ -1,15 +1,13 @@
 (function(){
-
 	'use strict';
 
 	angular
 		.module('app.core')
 		.factory('partyService', partyService);
 
-		partyService.$inject = ['$firebaseArray', 'firebaseDataService'];
+	partyService.$inject = ['$firebaseArray', 'firebaseDataService'];
 
-	function partyService(firebaseArray, firebaseDataService){
-		//return an object
+	function partyService($firebaseArray, firebaseDataService) {
 
 		var service = {
 			Party: Party,
@@ -20,11 +18,18 @@
 
 		////////////////////////
 		function Party() {
-			this.name = '',
-			this.phone ='',
-			this.size ='',
+			this.name = '';
+			this.phone ='';
+			this.size ='';
 			this.done = false;
 			this.notified = false;
+		}
+
+		function reset(){
+			if (parties){
+				parties.$destroy();
+				parties = null;	
+			}
 		}
 	}
 })();
